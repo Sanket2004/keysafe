@@ -198,7 +198,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       Center(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(30),
-                          child: SvgPicture.network(
+                          child: Image.network(
                             _getAvatarUrl(_fullNameController.text),
                             height: 125,
                             width: 125,
