@@ -80,7 +80,7 @@ class _SignupScreenState extends State<SignupScreen> {
               .doc(userCredential.user!.uid)
               .set({
             'uid': userCredential.user!.uid,
-            'full_name': _fullNameController.text,
+            'fullName': _fullNameController.text,
             'email': _emailController.text,
             'phone': _phoneController.text,
             'gender': _selectedGender,
