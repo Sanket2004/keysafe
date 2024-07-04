@@ -62,7 +62,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   String _getAvatarUrl(String name) {
-    return 'https://api.dicebear.com/9.x/initials/svg?seed=${Uri.encodeComponent(name)}';
+    return 'https://api.dicebear.com/9.x/initials/png?seed=${Uri.encodeComponent(name)}';
   }
 
   Future<void> _register() async {
