@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:password_manager/components/button.dart';
 import 'package:password_manager/responsive/responsive.dart';
@@ -62,7 +61,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   String _getAvatarUrl(String name) {
-    return 'https://api.dicebear.com/9.x/initials/svg?seed=${Uri.encodeComponent(name)}';
+    return 'https://api.dicebear.com/9.x/initials/png?seed=${Uri.encodeComponent(name)}';
   }
 
   Future<void> _register() async {
@@ -198,19 +197,27 @@ class _SignupScreenState extends State<SignupScreen> {
                       Center(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(30),
-                          child: SvgPicture.network(
+                          child: Image.network(
                             _getAvatarUrl(_fullNameController.text),
                             height: 125,
                             width: 125,
-                            placeholderBuilder: (BuildContext context) =>
-                                const SizedBox(
-                              height: 48,
-                              width: 48,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 10,
-                                color: Color(0xffff7754),
-                              ),
-                            ),
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) return child;
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                      : null,
+                                ),
+                              );
+                            },
+                            errorBuilder: (BuildContext context,
+                                Object exception, StackTrace? stackTrace) {
+                              return Text('Failed to load image');
+                            },
                           ),
                         ),
                       ).animate().slideX(

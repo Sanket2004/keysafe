@@ -409,7 +409,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               BorderRadius.circular(15),
                                           child: _userData != null
                                               ? Image.network(
-                                                  _userData!['avatar'])
+                                                  _userData!['avatar'],
+                                                )
                                               : const Text('Loading')),
                                     ),
                                   ).animate().slideX(
